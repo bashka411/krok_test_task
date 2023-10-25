@@ -29,7 +29,12 @@ class MyApp extends StatelessWidget {
         create: (context) => AppBloc(authRepository: _authRepository),
         child: Builder(builder: (context) {
           return MaterialApp(
-            theme: ThemeData(useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange )),
+            theme: ThemeData(
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.teal,
+              ),
+            ),
             home: FlowBuilder<AuthStatus>(
               state: context.select((AppBloc bloc) => bloc.state.status),
               onGeneratePages: onGenerateAppViewPages,

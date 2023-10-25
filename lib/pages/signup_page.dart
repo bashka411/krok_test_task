@@ -61,12 +61,10 @@ class _EmailInput extends StatelessWidget {
           margin: const EdgeInsets.all(8.0),
           child: TextFormField(
             onChanged: (email) => context.read<SignUpCubit>().emailChanged(email),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Email',
-              prefixIcon: const Icon(Icons.person_rounded),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-              ),
+              prefixIcon: Icon(Icons.person_rounded),
+              border: OutlineInputBorder(),
             ),
           ),
         );
@@ -88,12 +86,10 @@ class _PasswordInput extends StatelessWidget {
           child: TextFormField(
             obscureText: true,
             onChanged: (password) => context.read<SignUpCubit>().passwordChanged(password),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Password',
-              prefixIcon: const Icon(Icons.lock_rounded),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-              ),
+              prefixIcon: Icon(Icons.lock_rounded),
+              border: OutlineInputBorder(),
             ),
           ),
         );
@@ -115,7 +111,13 @@ class _SignUpButton extends StatelessWidget {
             : ElevatedButton(
                 onPressed: () => context.read<SignUpCubit>().signUpFormSubmitted(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   fixedSize: const Size(200, 40),
                 ),
                 child: const Text('Sign Up'),

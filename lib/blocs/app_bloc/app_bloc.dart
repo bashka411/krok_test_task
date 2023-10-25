@@ -23,9 +23,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppUserChangedEvent>(_onUserChangedEvent);
 
     _userSubscription = _authRepository.user.listen(
-      (user) => add(
-        AppUserChangedEvent(user),
-      ),
+      (user) => add(AppUserChangedEvent(user)),
     );
   }
 

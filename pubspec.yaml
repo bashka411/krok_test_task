@@ -21,6 +21,10 @@ dependencies:
   firebase_auth: ^4.10.1
   equatable: ^2.0.5
   flow_builder: ^0.0.9
+  google_sign_in: ^6.1.5
+  font_awesome_flutter: ^10.6.0
+  pedometer: ^4.0.1
+  permission_handler: ^11.0.1
 
 dev_dependencies:
   flutter_test:

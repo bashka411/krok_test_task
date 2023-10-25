@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:krok_test_task/models/user_model.dart';
 
 class AuthRepository {
@@ -8,6 +9,8 @@ class AuthRepository {
       : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
   var currentUser = User.empty;
+
+  final googleSignIn = GoogleSignIn();
 
   Stream<User> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
@@ -24,6 +27,20 @@ class AuthRepository {
     );
   }
 
+  Future<void> logInWithGoogle() async {
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) return;
+
+    final googleAuth = await googleUser.authentication;
+
+    final credential = firebase_auth.GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    await _firebaseAuth.signInWithCredential(credential);
+  }
+
   Future<void> logInWithEmailAndPassword({required String email, required String password}) async {
     await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
@@ -32,7 +49,9 @@ class AuthRepository {
   }
 
   Future<void> signOut() async {
-    await Future.wait([_firebaseAuth.signOut()]);
+    await _firebaseAuth.signOut();
+    await googleSignIn.signOut();
+    await googleSignIn.disconnect();
   }
 }
 
